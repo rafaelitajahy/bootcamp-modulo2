@@ -20,6 +20,20 @@ class Mail {
 
   configureTemplates() {
     const viewParh = resolve(__dirname, '..', 'app', 'views', 'emails');
+
+    this.transporter.use(
+      'compile',
+      nodemailerhbs({
+        viewEngine: exphbs.create({
+          layoutsDir: resolve(viewParh, 'layouts'),
+          partialsDir: resolve(viewParh, 'partials'),
+          defaultLayout: 'default',
+          extname: '.hbs',
+        }),
+        viewParh,
+        extname: '.hbs',
+      })
+    );
   }
 
   sendMail(message) {
