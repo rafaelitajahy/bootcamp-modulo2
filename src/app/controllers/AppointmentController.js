@@ -152,18 +152,22 @@ class AppointmentController {
 
     await appointment.save();
 
-    await Mail.sendMail({
-      to: `${appointment.provider.name} <${appointment.provider.email}>`,
-      subject: 'Agendamento cancelado',
-      template: 'cancellation',
-      context: {
-        provider: appointment.provider.name,
-        user: appointment.user.name,
-        date: format(appointment.date, "'dia' dd 'de' MMMM', às' H:mm'h'", {
-          locale: pt,
-        }),
-      },
-    });
+    try {
+      await Mail.sendMail({
+        to: `${appointment.provider.name} <${appointment.provider.email}>`,
+        subject: 'Agendamento cancelado',
+        template: 'cancellation',
+        context: {
+          provider: appointment.provider.name,
+          user: appointment.user.name,
+          date: format(appointment.date, "'dia' dd 'de' MMMM', às' H:mm'h'", {
+            locale: pt,
+          }),
+        },
+      }).catch(e => console.error(`.catch(${e})`));
+    } catch (error) {
+      console.error(`try/catch(${error})`);
+    }
 
     return res.json(appointment);
   }
