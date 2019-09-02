@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "queue" : "nodemon src/queue.js",
-    "debug": "node --inspect-brk -r sucrase/register src/server.js"
+    "debug": "node --inspect-brk -r sucrase/register src/server.js",
+    "db": "docker start database mongobarber redisbarber"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
